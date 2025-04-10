@@ -1,14 +1,9 @@
-import { Button } from "@/components/ui/button";
-import { useState } from "react";
+import { Outlet } from "react-router";
 
 function App() {
-    const [count, setCount] = useState(0);
-
     return (
-        <div className="flex items-center justify-center h-screen w-screen bg-slate-800">
-            <Button onClick={() => setCount((prev) => prev + 1)}>
-                Count is {count}
-            </Button>
+        <div className="h-screen w-screen bg-slate-800">
+            <Outlet />
         </div>
     );
 }
