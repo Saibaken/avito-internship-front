@@ -6,9 +6,9 @@ import "./index.css";
 
 import { createBrowserRouter, Navigate, RouterProvider } from "react-router";
 import BoardDetail from "./pages/boards/board-detail.tsx";
-import BoardsList from "./pages/boards/boards-list.tsx";
+import BoardsListPage from "./pages/boards/boards-list-page.tsx";
 import IssueDetail from "./pages/issues/issue-detail.tsx";
-import IssuesList from "./pages/issues/issues-list.tsx";
+import IssuesListPage from "./pages/issues/issues-list-page.tsx";
 
 const router = createBrowserRouter([
     {
@@ -21,7 +21,7 @@ const router = createBrowserRouter([
             {
                 path: "boards",
                 children: [
-                    { index: true, Component: BoardsList },
+                    { index: true, Component: BoardsListPage },
                     {
                         path: ":boardId",
                         Component: BoardDetail,
@@ -34,7 +34,7 @@ const router = createBrowserRouter([
             {
                 path: "issues",
                 children: [
-                    { index: true, Component: IssuesList },
+                    { index: true, Component: IssuesListPage },
                     {
                         path: ":issueId",
                         Component: IssueDetail,
