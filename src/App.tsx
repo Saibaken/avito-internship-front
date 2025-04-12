@@ -5,7 +5,9 @@ function App() {
     return (
         <>
             <Header />
-            <Outlet />
+            <div className="p-8">
+                <Outlet />
+            </div>
         </>
     );
 }
