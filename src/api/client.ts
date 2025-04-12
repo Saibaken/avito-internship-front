@@ -60,7 +60,7 @@ export class APIClient {
 
     public post<T>(
         endpoint: string,
-        body: any,
+        body: BodyInit,
         options?: Omit<RequestInit, "body">
     ) {
         return this.request<T>(endpoint, "POST", { body, ...options });
@@ -68,7 +68,7 @@ export class APIClient {
 
     public put<T>(
         endpoint: string,
-        body: any,
+        body: BodyInit,
         options?: Omit<RequestInit, "body">
     ) {
         return this.request<T>(endpoint, "PUT", { body, ...options });

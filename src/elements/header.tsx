@@ -15,6 +15,7 @@ export default function Header() {
                     className={({ isActive }) =>
                         `text-xl font-bold ${isActive ? "text-red-600" : "text-white"}`
                     }
+                    key={page.link}
                 >
                     {page.name}
                 </NavLink>

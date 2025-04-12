@@ -4,7 +4,9 @@ export default function IssuesList() {
     return (
         <>
             {issues.map((issue) => (
-                <div className="bg-slate-400">{issue}</div>
+                <div className="bg-slate-400" key={issue}>
+                    {issue}
+                </div>
             ))}
         </>
     );
