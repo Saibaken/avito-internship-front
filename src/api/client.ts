@@ -21,7 +21,7 @@ export class APIClient {
     private baseUrl: string;
 
     constructor(baseUrl: string) {
-        this.baseUrl = baseUrl.endsWith("/") ? baseUrl : `${baseUrl}/`;
+        this.baseUrl = baseUrl.endsWith("/") ? baseUrl.slice(-1) : baseUrl;
     }
 
     private async request<T>(
