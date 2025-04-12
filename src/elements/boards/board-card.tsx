@@ -29,7 +29,7 @@ export function BoardCard({ id, description, name, taskCount }: Board) {
             <CardContent className="flex flex-row flex-wrap justify-between items-baseline">
                 <p>{description}</p>
                 <NavLink to={`/boards/${id}`}>
-                    <Button variant="ghost" className="cursor-pointer">
+                    <Button variant="outline" className="cursor-pointer">
                         Перейти к доске
                     </Button>
                 </NavLink>
