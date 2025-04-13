@@ -8,7 +8,7 @@ const pages: { link: string; name: string }[] = [
 
 export default function Header() {
     return (
-        <div className="w-full h-10 flex gap-8 items-center p-8">
+        <div className="w-full h-10 flex gap-8 items-center p-8 sticky top-0 bg-background z-10 shadow-sm">
             {pages.map((page) => (
                 <NavLink
                     to={page.link}
