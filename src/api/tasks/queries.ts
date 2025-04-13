@@ -1,4 +1,5 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { boardsQueryKeys } from "../boards";
 import { apiClient, APIError } from "../client";
 import { CommonResponse } from "../common-types";
 import {
@@ -24,52 +25,73 @@ export const tasksQueryKeys = {
 /** Получить список всех задач */
 export const useTasks = () =>
     useQuery<CommonResponse<TaskShort[]>, APIError>({
-        queryKey: [tasksKey],
+        queryKey: tasksQueryKeys.allTasks,
         queryFn: ({ signal }) => apiClient.get(tasksUrl, { signal }),
     });
 
 /** Создать задачу */
-export const useTaskCreate = (data: TaskCreateRequest) => {
+export const useTaskCreate = () => {
     const queryClient = useQueryClient();
 
     return useMutation<TaskCreateResponse, APIError, TaskCreateRequest>({
-        mutationFn: () => apiClient.post(`${tasksUrl}/create`, { data }),
+        mutationFn: (data) => apiClient.post(`${tasksUrl}/create`, { ...data }),
         onSuccess: () =>
-            queryClient.invalidateQueries({ queryKey: [tasksKey] }),
+            queryClient.invalidateQueries({
+                queryKey: tasksQueryKeys.allTasks,
+            }),
     });
 };
 
 /** Обновить поля задачи */
-export const useTaskUpdate = (data: TaskUpdateRequest) => {
+export const useTaskUpdate = () => {
     const queryClient = useQueryClient();
 
-    const { taskId, ...restData } = data;
+    return useMutation<
+        TaskUpdateResponse,
+        APIError,
+        TaskUpdateRequest & { boardId: number }
+    >({
+        mutationFn: (data) => {
+            const { taskId, ...restData } = data;
 
-    return useMutation<TaskUpdateResponse, APIError, TaskUpdateRequest>({
-        mutationFn: () =>
-            apiClient.post(`${tasksUrl}/update/${taskId}`, { data: restData }),
-        onSuccess: () =>
-            queryClient.invalidateQueries({ queryKey: [tasksKey, taskId] }),
+            return apiClient.put(`${tasksUrl}/update/${taskId}`, {
+                ...restData,
+            });
+        },
+        onSuccess: (_, request) => {
+            queryClient.invalidateQueries({
+                queryKey: tasksQueryKeys.getTask(request.taskId),
+            });
+            queryClient.invalidateQueries({
+                queryKey: boardsQueryKeys.getBoardTasks(request.boardId),
+            });
+        },
     });
 };
 
 /** Обновить статус задачи */
-export const useTaskUpdateStatus = (data: TaskUpdateStatusRequest) => {
+export const useTaskUpdateStatus = () => {
     const queryClient = useQueryClient();
-
-    const { taskId, ...restData } = data;
 
     return useMutation<
         TaskUpdateStatusResponse,
         APIError,
-        TaskUpdateStatusRequest
+        TaskUpdateStatusRequest & { boardId: number }
     >({
-        mutationFn: () =>
-            apiClient.post(`${tasksUrl}/updateStatus/${taskId}`, {
-                data: restData,
-            }),
-        onSuccess: () =>
-            queryClient.invalidateQueries({ queryKey: [tasksKey, taskId] }),
+        mutationFn: (data) => {
+            const { taskId, ...restData } = data;
+            return apiClient.put(`${tasksUrl}/updateStatus/${taskId}`, {
+                ...restData,
+            });
+        },
+        onSuccess: (_, request) => {
+            queryClient.invalidateQueries({
+                queryKey: tasksQueryKeys.getTask(request.taskId),
+            });
+            queryClient.invalidateQueries({
+                queryKey: boardsQueryKeys.getBoardTasks(request.boardId),
+            });
+        },
     });
 };
 
