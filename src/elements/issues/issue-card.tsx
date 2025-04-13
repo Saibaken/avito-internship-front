@@ -1,7 +1,7 @@
-import { TaskPriorityEnum, TaskShort, TaskStatusEnum } from "@/api/tasks";
+import { TaskShort } from "@/api/tasks";
 import { Button } from "@/atoms";
 import { Avatar, AvatarFallback, AvatarImage } from "@/atoms/avatar";
-import { Badge, badgeVariants } from "@/atoms/badge";
+import { Badge } from "@/atoms/badge";
 import {
     Card,
     CardContent,
@@ -10,29 +10,13 @@ import {
     CardHeader,
     CardTitle,
 } from "@/atoms/card";
-import { VariantProps } from "class-variance-authority";
-import { ChevronsUp, ChevronUp, Minus } from "lucide-react";
 import { useMemo } from "react";
 import { NavLink } from "react-router";
-
-const statusDictionary: Record<TaskStatusEnum, string> = {
-    Backlog: "Бэклог",
-    InProgress: "В работе",
-    Done: "Завершен",
-};
-
-const priorityIcon = (priority: TaskPriorityEnum) => {
-    switch (priority) {
-        case TaskPriorityEnum.HIGH:
-            return <ChevronsUp className="text-red-500" />;
-        case TaskPriorityEnum.MEDIUM:
-            return <ChevronUp className="text-amber-400" />;
-        case TaskPriorityEnum.LOW:
-            return <Minus className="text-gray-500" strokeWidth={2.5} />;
-        default:
-            return <Minus className="text-gray-500" strokeWidth={2.5} />;
-    }
-};
+import {
+    getStatusBadgeVariant,
+    priorityIcon,
+    statusDictionary,
+} from "./common";
 
 export function IssueCard({
     assignee,
@@ -49,19 +33,10 @@ export function IssueCard({
             ? `${description.slice(0, 252)}...`
             : description;
 
-    const statusBadgeVariant: VariantProps<typeof badgeVariants>["variant"] =
-        useMemo(() => {
-            switch (status) {
-                case TaskStatusEnum.BACKLOG:
-                    return "gray";
-                case TaskStatusEnum.IN_PROGRESS:
-                    return "blue";
-                case TaskStatusEnum.DONE:
-                    return "green";
-                default:
-                    return "gray";
-            }
-        }, [status]);
+    const statusBadgeVariant = useMemo(
+        () => getStatusBadgeVariant(status),
+        [status]
+    );
 
     return (
         <Card className="gap-2">

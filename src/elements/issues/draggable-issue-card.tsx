@@ -1,0 +1,95 @@
+import { BoardTaskListItem } from "@/api/boards";
+import { Button } from "@/atoms";
+import { Avatar, AvatarFallback, AvatarImage } from "@/atoms/avatar";
+import { Badge } from "@/atoms/badge";
+import {
+    Card,
+    CardContent,
+    CardDescription,
+    CardFooter,
+    CardHeader,
+    CardTitle,
+} from "@/atoms/card";
+import { useDraggable } from "@dnd-kit/core";
+import { CSS } from "@dnd-kit/utilities";
+import { GripVertical, Mail } from "lucide-react";
+import { ReactNode, useMemo } from "react";
+import { NavLink } from "react-router";
+import {
+    getStatusBadgeVariant,
+    priorityIcon,
+    statusDictionary,
+} from "./common";
+
+export function DraggableIssueCard({
+    assignee,
+    id,
+    description,
+    priority,
+    status,
+    title,
+}: BoardTaskListItem & { gripHandle?: ReactNode }) {
+    const { attributes, listeners, setNodeRef, transform } = useDraggable({
+        id,
+        data: {
+            status,
+        },
+    });
+    const style = {
+        transform: CSS.Translate.toString(transform),
+    };
+
+    const descriptionSlice =
+        description.length > 100
+            ? `${description.slice(0, 97)}...`
+            : description;
+
+    const statusBadgeVariant = useMemo(
+        () => getStatusBadgeVariant(status),
+        [status]
+    );
+
+    return (
+        <Card className="gap-2" style={style} ref={setNodeRef}>
+            <CardHeader>
+                <CardTitle className="align-baseline">
+                    <div className="flex gap-2 items-middle">
+                        <GripVertical {...attributes} {...listeners} />
+                        <NavLink to={`/issues/${id}`} className="mr-auto">
+                            <p>{title}</p>
+                        </NavLink>
+                        {priorityIcon(priority)}
+                    </div>
+                </CardTitle>
+                <CardDescription>{descriptionSlice}</CardDescription>
+            </CardHeader>
+            <CardContent className="flex">
+                <Badge variant={statusBadgeVariant}>
+                    {statusDictionary[status]}
+                </Badge>
+            </CardContent>
+            <CardFooter>
+                <div className="flex gap-2 items-center font-medium w-fit mr-auto">
+                    <NavLink
+                        to={`/users/${assignee.id}`}
+                        className="flex gap-2"
+                    >
+                        <Avatar className="w-6 h-6">
+                            <AvatarImage
+                                src={assignee.avatarUrl}
+                                alt={assignee.fullName}
+                            />
+                            <AvatarFallback></AvatarFallback>
+                        </Avatar>
+                        <span>{assignee.fullName}</span>
+                    </NavLink>
+                    <NavLink to={`mailto:${assignee.email}`}>
+                        <Button variant="ghost" className="cursor-pointer">
+                            <Mail />
+                        </Button>
+                    </NavLink>
+                </div>
+            </CardFooter>
+        </Card>
+    );
+}
