@@ -1,8 +1,8 @@
 import { useBoardDetail, useBoards } from "@/api/boards";
 import { TaskStatusEnum, useTaskUpdateStatus } from "@/api/tasks";
 import { Skeleton } from "@/atoms";
+import { statusDictionary } from "@/consts/issues";
 import { BoardColumn } from "@/elements/boards/board-column";
-import { statusDictionary } from "@/elements/issues/common";
 import {
     DndContext,
     DragEndEvent,

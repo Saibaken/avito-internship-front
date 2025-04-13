@@ -1,7 +1,6 @@
 import { BoardTaskListItem } from "@/api/boards";
 import { Button } from "@/atoms";
 import { Avatar, AvatarFallback, AvatarImage } from "@/atoms/avatar";
-import { Badge } from "@/atoms/badge";
 import {
     Card,
     CardContent,
@@ -13,13 +12,9 @@ import {
 import { useDraggable } from "@dnd-kit/core";
 import { CSS } from "@dnd-kit/utilities";
 import { GripVertical, Mail } from "lucide-react";
-import { ReactNode, useMemo } from "react";
+import { ReactNode } from "react";
 import { NavLink } from "react-router";
-import {
-    getStatusBadgeVariant,
-    priorityIcon,
-    statusDictionary,
-} from "./common";
+import { priorityIcon, statusBadge } from "./common";
 
 export function DraggableIssueCard({
     assignee,
@@ -44,11 +39,6 @@ export function DraggableIssueCard({
             ? `${description.slice(0, 97)}...`
             : description;
 
-    const statusBadgeVariant = useMemo(
-        () => getStatusBadgeVariant(status),
-        [status]
-    );
-
     return (
         <Card className="gap-2" style={style} ref={setNodeRef}>
             <CardHeader>
@@ -63,11 +53,7 @@ export function DraggableIssueCard({
                 </CardTitle>
                 <CardDescription>{descriptionSlice}</CardDescription>
             </CardHeader>
-            <CardContent className="flex">
-                <Badge variant={statusBadgeVariant}>
-                    {statusDictionary[status]}
-                </Badge>
-            </CardContent>
+            <CardContent className="flex">{statusBadge(status)}</CardContent>
             <CardFooter>
                 <div className="flex gap-2 items-center font-medium w-fit mr-auto">
                     <NavLink

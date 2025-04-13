@@ -1,13 +1,7 @@
 import { TaskPriorityEnum, TaskStatusEnum } from "@/api/tasks";
-import { badgeVariants } from "@/atoms/badge";
-import { VariantProps } from "class-variance-authority";
+import { Badge } from "@/atoms/badge";
+import { statusDictionary } from "@/consts/issues";
 import { ChevronsUp, ChevronUp, Minus } from "lucide-react";
-
-export const statusDictionary: Record<TaskStatusEnum, string> = {
-    Backlog: "Бэклог",
-    InProgress: "В работе",
-    Done: "Завершен",
-};
 
 export const priorityIcon = (priority: TaskPriorityEnum) => {
     switch (priority) {
@@ -22,19 +16,15 @@ export const priorityIcon = (priority: TaskPriorityEnum) => {
     }
 };
 
-export const getStatusBadgeVariant: (
-    status: TaskStatusEnum
-) => VariantProps<typeof badgeVariants>["variant"] = (
-    status: TaskStatusEnum
-) => {
+export const statusBadge = (status: TaskStatusEnum) => {
     switch (status) {
         case TaskStatusEnum.BACKLOG:
-            return "gray";
+            return <Badge variant="gray">{statusDictionary[status]}</Badge>;
         case TaskStatusEnum.IN_PROGRESS:
-            return "blue";
+            return <Badge variant="blue">{statusDictionary[status]}</Badge>;
         case TaskStatusEnum.DONE:
-            return "green";
+            return <Badge variant="green">{statusDictionary[status]}</Badge>;
         default:
-            return "gray";
+            return null;
     }
 };

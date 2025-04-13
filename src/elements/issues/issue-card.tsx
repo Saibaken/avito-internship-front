@@ -1,7 +1,5 @@
-import { TaskShort } from "@/api/tasks";
 import { Button } from "@/atoms";
 import { Avatar, AvatarFallback, AvatarImage } from "@/atoms/avatar";
-import { Badge } from "@/atoms/badge";
 import {
     Card,
     CardContent,
@@ -10,13 +8,9 @@ import {
     CardHeader,
     CardTitle,
 } from "@/atoms/card";
-import { useMemo } from "react";
 import { NavLink } from "react-router";
-import {
-    getStatusBadgeVariant,
-    priorityIcon,
-    statusDictionary,
-} from "./common";
+import { priorityIcon, statusBadge } from "./common";
+import { Task } from "@/api/tasks";
 
 export function IssueCard({
     assignee,
@@ -27,16 +21,11 @@ export function IssueCard({
     priority,
     status,
     title,
-}: TaskShort) {
+}: Task) {
     const descriptionSlice =
         description.length > 255
             ? `${description.slice(0, 252)}...`
             : description;
-
-    const statusBadgeVariant = useMemo(
-        () => getStatusBadgeVariant(status),
-        [status]
-    );
 
     return (
         <Card className="gap-2">
@@ -51,11 +40,7 @@ export function IssueCard({
                 </CardTitle>
                 <CardDescription>{descriptionSlice}</CardDescription>
             </CardHeader>
-            <CardContent className="flex">
-                <Badge variant={statusBadgeVariant}>
-                    {statusDictionary[status]}
-                </Badge>
-            </CardContent>
+            <CardContent className="flex">{statusBadge(status)}</CardContent>
             <CardFooter>
                 <NavLink
                     className="flex gap-2 items-center font-medium w-fit mr-auto"
