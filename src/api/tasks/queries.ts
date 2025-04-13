@@ -35,10 +35,17 @@ export const useTaskCreate = () => {
 
     return useMutation<TaskCreateResponse, APIError, TaskCreateRequest>({
         mutationFn: (data) => apiClient.post(`${tasksUrl}/create`, { ...data }),
-        onSuccess: () =>
+        onSuccess: (_, request) => {
             queryClient.invalidateQueries({
                 queryKey: tasksQueryKeys.allTasks,
-            }),
+            });
+            queryClient.invalidateQueries({
+                queryKey: boardsQueryKeys.getBoardTasks(request.boardId),
+            });
+            queryClient.invalidateQueries({
+                queryKey: boardsQueryKeys.allBoards,
+            });
+        },
     });
 };
 
@@ -97,7 +104,7 @@ export const useTaskUpdateStatus = () => {
 
 /** Получить детальную страницу задачи */
 export const useTaskDetail = (id: number) =>
-    useQuery<{ id: number }, APIError, Task>({
+    useQuery<{ id: number }, APIError, CommonResponse<Task>>({
         queryKey: [tasksKey, id],
         queryFn: ({ signal }) => apiClient.get(`${tasksUrl}/${id}`, { signal }),
     });
