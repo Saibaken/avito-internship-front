@@ -6,7 +6,6 @@ import {
     Task,
     TaskCreateRequest,
     TaskCreateResponse,
-    TaskShort,
     TaskUpdateRequest,
     TaskUpdateResponse,
     TaskUpdateStatusRequest,
@@ -24,7 +23,7 @@ export const tasksQueryKeys = {
 
 /** Получить список всех задач */
 export const useTasks = () =>
-    useQuery<CommonResponse<TaskShort[]>, APIError>({
+    useQuery<CommonResponse<Task[]>, APIError>({
         queryKey: tasksQueryKeys.allTasks,
         queryFn: ({ signal }) => apiClient.get(tasksUrl, { signal }),
     });
@@ -69,6 +68,10 @@ export const useTaskUpdate = () => {
             queryClient.invalidateQueries({
                 queryKey: tasksQueryKeys.getTask(request.taskId),
             });
+            console.log(
+                "task update invalidate",
+                boardsQueryKeys.getBoardTasks(request.boardId)
+            );
             queryClient.invalidateQueries({
                 queryKey: boardsQueryKeys.getBoardTasks(request.boardId),
             });
@@ -105,6 +108,6 @@ export const useTaskUpdateStatus = () => {
 /** Получить детальную страницу задачи */
 export const useTaskDetail = (id: number) =>
     useQuery<{ id: number }, APIError, CommonResponse<Task>>({
-        queryKey: [tasksKey, id],
+        queryKey: tasksQueryKeys.getTask(id),
         queryFn: ({ signal }) => apiClient.get(`${tasksUrl}/${id}`, { signal }),
     });

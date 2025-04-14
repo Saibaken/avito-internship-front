@@ -9,11 +9,12 @@ import {
     CardHeader,
     CardTitle,
 } from "@/atoms/card";
+import { useIssueFormStore } from "@/stores/useIssuePopup";
 import { useDraggable } from "@dnd-kit/core";
 import { CSS } from "@dnd-kit/utilities";
 import { GripVertical, Mail } from "lucide-react";
 import { ReactNode } from "react";
-import { NavLink } from "react-router";
+import { NavLink, useLoaderData } from "react-router";
 import { priorityIcon, statusBadge } from "./common";
 
 export function DraggableIssueCard({
@@ -24,6 +25,8 @@ export function DraggableIssueCard({
     status,
     title,
 }: BoardTaskListItem & { gripHandle?: ReactNode }) {
+    const { boardId } = useLoaderData<{ boardId: string }>();
+    const openPopup = useIssueFormStore((state) => state.open);
     const { attributes, listeners, setNodeRef, transform } = useDraggable({
         id,
         data: {
@@ -45,9 +48,17 @@ export function DraggableIssueCard({
                 <CardTitle className="align-baseline">
                     <div className="flex gap-2 items-middle">
                         <GripVertical {...attributes} {...listeners} />
-                        <NavLink to={`/issues/${id}`} className="mr-auto">
-                            <p>{title}</p>
-                        </NavLink>
+                        <button
+                            className="mr-auto cursor-pointer"
+                            onClick={() =>
+                                openPopup("update", {
+                                    taskId: id,
+                                    boardId: Number(boardId),
+                                })
+                            }
+                        >
+                            {title}
+                        </button>
                         {priorityIcon(priority)}
                     </div>
                 </CardTitle>

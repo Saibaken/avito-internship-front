@@ -5,7 +5,7 @@ function App() {
     return (
         <>
             <Header />
-            <div className="p-8">
+            <div className="p-8 space-y-6">
                 <Outlet />
             </div>
         </>
