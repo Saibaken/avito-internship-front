@@ -66,7 +66,7 @@ export function IssueFilters({
                     control={form.control}
                     name="query"
                     render={({ field }) => (
-                        <FormItem className="min-w-92">
+                        <FormItem className="sm:w-92 w-full">
                             <FormLabel>Поиск</FormLabel>
                             <FormControl>
                                 <Input
@@ -151,7 +151,7 @@ export function IssueFilters({
                         )}
                     />
 
-                    <div className="flex gap-2 items-baseline">
+                    <div className="flex gap-2 items-end">
                         <Button
                             className="cursor-pointer"
                             type="submit"

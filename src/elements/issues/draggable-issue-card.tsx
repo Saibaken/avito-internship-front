@@ -45,7 +45,7 @@ export function DraggableIssueCard({
     return (
         <Card className="gap-2" style={style} ref={setNodeRef}>
             <CardHeader>
-                <CardTitle className="align-baseline">
+                <CardTitle className="align-end">
                     <div className="flex gap-2 items-middle">
                         <GripVertical {...attributes} {...listeners} />
                         <button

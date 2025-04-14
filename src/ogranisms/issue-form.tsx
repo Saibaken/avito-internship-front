@@ -362,7 +362,7 @@ export function UpdateIssueForm({
             >
                 <CommonTaskFields isUpdate />
 
-                <div className="flex justify-between items-baseline">
+                <div className="flex justify-between items-end">
                     {!isBoardsPage && (
                         <NavLink to={`/boards/${boardId}`}>
                             <Button

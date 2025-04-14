@@ -78,7 +78,7 @@ export default function BoardDetail() {
                 {currentBoard?.name || `Доска №${boardId}`}
             </h1>
             <DndContext sensors={sensors} onDragEnd={onDragEnd}>
-                <div className="grid grid-cols-3 gap-2">
+                <div className="grid grid-cols-[minmax(18rem,1fr)_minmax(18rem,1fr)_minmax(18rem,1fr)] gap-2 overflow-auto">
                     {taskStatuses.map((status) => (
                         <BoardColumn
                             title={statusDictionary[status]}
