@@ -1,4 +1,5 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { toast } from "sonner";
 import { boardsQueryKeys } from "../boards";
 import { apiClient, APIError } from "../client";
 import { CommonResponse } from "../common-types";
@@ -35,6 +36,8 @@ export const useTaskCreate = () => {
     return useMutation<TaskCreateResponse, APIError, TaskCreateRequest>({
         mutationFn: (data) => apiClient.post(`${tasksUrl}/create`, { ...data }),
         onSuccess: (_, request) => {
+            // TODO: попробовать переместить из хука
+            toast.success("Задача создана");
             queryClient.invalidateQueries({
                 queryKey: tasksQueryKeys.allTasks,
             });
@@ -45,6 +48,7 @@ export const useTaskCreate = () => {
                 queryKey: boardsQueryKeys.allBoards,
             });
         },
+        onError: (error) => toast.error(error.message),
     });
 };
 
@@ -65,6 +69,7 @@ export const useTaskUpdate = () => {
             });
         },
         onSuccess: (_, request) => {
+            toast.success("Задача обновлена");
             queryClient.invalidateQueries({
                 queryKey: tasksQueryKeys.getTask(request.taskId),
             });
@@ -72,6 +77,7 @@ export const useTaskUpdate = () => {
                 queryKey: boardsQueryKeys.getBoardTasks(request.boardId),
             });
         },
+        onError: (error) => toast.error(error.message),
     });
 };
 
@@ -91,6 +97,7 @@ export const useTaskUpdateStatus = () => {
             });
         },
         onSuccess: (_, request) => {
+            toast.success("Задача обновлена");
             queryClient.invalidateQueries({
                 queryKey: tasksQueryKeys.getTask(request.taskId),
             });
@@ -98,6 +105,7 @@ export const useTaskUpdateStatus = () => {
                 queryKey: boardsQueryKeys.getBoardTasks(request.boardId),
             });
         },
+        onError: (error) => toast.error(error.message),
     });
 };
 
