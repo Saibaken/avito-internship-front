@@ -47,7 +47,11 @@ export function DraggableIssueCard({
             <CardHeader>
                 <CardTitle className="align-end">
                     <div className="flex gap-2 items-middle">
-                        <GripVertical {...attributes} {...listeners} />
+                        <GripVertical
+                            {...attributes}
+                            {...listeners}
+                            className="cursor-grab"
+                        />
                         <button
                             className="mr-auto cursor-pointer"
                             onClick={() =>
