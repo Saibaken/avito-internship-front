@@ -20,7 +20,7 @@ export function BoardColumn({
                     {title}
                 </h2>
             </div>
-            <ol className="flex flex-col gap-2 p-2 overflow-auto">
+            <ol className="flex flex-col gap-2 p-2">
                 {issues.map((issue) => (
                     <li key={issue.id}>
                         <DraggableIssueCard {...issue} />

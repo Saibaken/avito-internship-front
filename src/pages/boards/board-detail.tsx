@@ -12,7 +12,7 @@ import {
     useSensor,
     useSensors,
 } from "@dnd-kit/core";
-import { useCallback } from "react";
+import { useCallback, useMemo } from "react";
 import { useLoaderData } from "react-router";
 
 const taskStatuses: TaskStatusEnum[] = [
@@ -41,12 +41,12 @@ export default function BoardDetail() {
     );
 
     const onDragEnd = useCallback(
-        (event: DragEndEvent) => {
+        async (event: DragEndEvent) => {
             const taskId = event.active.id;
             const prevStatus = event.active.data.current?.status;
             const status = event.over?.id;
             if (!!status && status !== prevStatus) {
-                updateTaskStatus.mutateAsync({
+                await updateTaskStatus.mutateAsync({
                     taskId: Number(taskId),
                     status: status as TaskStatusEnum,
                     boardId: Number(boardId),
@@ -56,10 +56,16 @@ export default function BoardDetail() {
         [boardId, updateTaskStatus]
     );
 
+    const currentBoard = useMemo(
+        () =>
+            allBoards.data?.data.find((board) => board.id === Number(boardId)),
+        [allBoards.data?.data, boardId]
+    );
+
     if (boardDetail.isLoading)
         return (
             <div>
-                <h1 className="text-2xl font-bold mb-4">Loading...</h1>
+                <h1 className="text-2xl font-bold mb-4">Загрузка...</h1>
                 <div className="grid grid-cols-3 gap-2">
                     {[1, 2, 3].map((col) => (
                         <Skeleton key={col} className="h-32 w-full" />
@@ -67,10 +73,6 @@ export default function BoardDetail() {
                 </div>
             </div>
         );
-
-    const currentBoard = allBoards.data?.data.find(
-        (board) => board.id === Number(boardId)
-    );
 
     return (
         <div>
