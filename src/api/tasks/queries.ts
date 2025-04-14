@@ -68,10 +68,6 @@ export const useTaskUpdate = () => {
             queryClient.invalidateQueries({
                 queryKey: tasksQueryKeys.getTask(request.taskId),
             });
-            console.log(
-                "task update invalidate",
-                boardsQueryKeys.getBoardTasks(request.boardId)
-            );
             queryClient.invalidateQueries({
                 queryKey: boardsQueryKeys.getBoardTasks(request.boardId),
             });

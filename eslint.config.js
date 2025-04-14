@@ -45,6 +45,7 @@ export default tseslint.config(
             "react/prop-types": "error",
             "react/react-in-jsx-scope": "off",
             "@typescript-eslint/no-empty-object-type": "off",
+            "no-console": "error",
         },
     }
 );

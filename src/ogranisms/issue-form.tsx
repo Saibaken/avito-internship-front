@@ -333,14 +333,6 @@ export function UpdateIssueForm({
     });
 
     const onSubmit = async (values: UpdateFormValues) => {
-        console.log(
-            "values:",
-            values,
-            "updateForm:",
-            updateFormToApiPayload(values, taskId),
-            "boardId:",
-            boardId
-        );
         await updateTask.mutateAsync(updateFormToApiPayload(values, taskId));
         await taskData.refetch();
         form.reset();
@@ -350,14 +342,7 @@ export function UpdateIssueForm({
     useEffect(() => {
         if (taskData.data) {
             const task = taskData.data.data;
-            console.log("form reset", {
-                title: task.title,
-                description: task.description,
-                boardId: boardId,
-                assigneeId: task.assignee?.id ?? undefined,
-                priority: task.priority,
-                status: task.status,
-            });
+
             form.reset({
                 title: task.title,
                 description: task.description,
