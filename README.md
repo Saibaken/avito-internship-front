@@ -1,54 +1,58 @@
-# React + TypeScript + Vite
+# Тестовое задание Avito
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Пакетный менеджер [bun](https://bun.sh/docs/installation)
+Сборщик [vite](https://vite.dev/guide/)
+Роутинг [react-router](https://reactrouter.com/)
+Data-fetching [react-query](https://tanstack.com/query/latest/docs/framework/react/overview)
+Стейт-менеджер [zustand](https://zustand.docs.pmnd.rs/)
+Библиотека компонентов [shadcn](https://ui.shadcn.com/)
+CSS фреймворк [tailwind](https://tailwindcss.com/)
+Библиотека форм [react-hook-form](https://react-hook-form.com/)
+Валидация форм [zod](https://zod.dev/)
+Drag-n-drop библиотека [dnd-kit](https://dndkit.com/)
 
-Currently, two official plugins are available:
+# Список требований
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Общие
 
-## Expanding the ESLint configuration
+[x]Просмотр всех задач: отображение всех созданных задач
+[x]Просмотр досок: отображение всех досок
+[x]Просмотр доски: отображение доски с просмотром задач и краткой информации по ним
+[x]Детальный просмотр задачи: модальное окно с возможностью просмотра/редактирования детальной информации о задаче
+[x]Создание задачи: возможность создать тикет и прикрепить его к нужной доске
+[x]Редактирование задачи со страницы всех задач: возможность со страницы всех задач посмотреть/отредактировать детальную информацию о задаче
+[x]Редактирование задачи со страницы доски: возможность на странице доски посмотреть/отредактировать детальную информацию о задаче
+[ ]Возможность со страницы всех задач перейти на страницу доски с открытием детальной информации о выбранной задаче
+[x]Header: Есть header при помощи которого можно всегда перейти на страницы:
+[x]Список всех задач
+[x]Список досок
+[x]Кнопка создания задачи
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+## Страница задач
 
-```js
-export default tseslint.config({
-    extends: [
-        // Remove ...tseslint.configs.recommended and replace with this
-        ...tseslint.configs.recommendedTypeChecked,
-        // Alternatively, use this for stricter rules
-        ...tseslint.configs.strictTypeChecked,
-        // Optionally, add this for stylistic rules
-        ...tseslint.configs.stylisticTypeChecked,
-    ],
-    languageOptions: {
-        // other options...
-        parserOptions: {
-            project: ["./tsconfig.node.json", "./tsconfig.app.json"],
-            tsconfigRootDir: import.meta.dirname,
-        },
-    },
-});
-```
+[x]На странице есть кнопка «Создать задачу». После создания задачи список должен обновиться
+[x]При клике на задачу открывается modal/drawer с заполненной формой. Все параметры задачи можно обновить. Есть кнопка, кликнув на которую можно перейти на доску, к которой прикреплена задача. Должна открыться страница доски и modal/drawer с предзаполными полями задачи
+[ ]Фильтр по статусу задачи
+[ ]Фильтр по доске, к которой он привязан
+[ ]Поиск по названию задачи
+[ ]Поиск по исполнителю
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+## Страница проектов
 
-```js
-// eslint.config.js
-import reactX from "eslint-plugin-react-x";
-import reactDom from "eslint-plugin-react-dom";
+[x]На странице отображен список всех проектов(досок)
+[x]Из страницы можно перейти на страницу выбранного проекта
 
-export default tseslint.config({
-    plugins: {
-        // Add the react-x and react-dom plugins
-        "react-x": reactX,
-        "react-dom": reactDom,
-    },
-    rules: {
-        // other rules...
-        // Enable its recommended typescript rules
-        ...reactX.configs["recommended-typescript"].rules,
-        ...reactDom.configs.recommended.rules,
-    },
-});
-```
+## Страница доски
+
+[x]На странице доски отображаются все задачи этого проекта
+[x]На любую задачу можно нажать, тем самым вызвав окно редактирования с предзаполненными полями
+[x]Задачи разделены на колонки по их статусам. При изменении статуса задачи, она должна перейти в другую колонку без перезагрузки страницы
+[x]Cмена статуса задачи на доске посредством Drag-and-drop
+[ ]При перезагрузке страницы данные формы должны сохраняться в черновик
+
+# Для локальной разработки
+
+1. Установить зависимости
+   `bun i`
+2. Запуск в режиме разработчика
+   `bun run dev`
