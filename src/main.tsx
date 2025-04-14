@@ -4,7 +4,6 @@ import { createRoot } from "react-dom/client";
 import App from "./App.tsx";
 import "./index.css";
 
-import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { createBrowserRouter, Navigate, RouterProvider } from "react-router";
 import BoardDetail from "./pages/boards/board-detail.tsx";
 import BoardsListPage from "./pages/boards/boards-list-page.tsx";
@@ -49,7 +48,6 @@ const queryClient = new QueryClient();
 createRoot(document.getElementById("root")!).render(
     <StrictMode>
         <QueryClientProvider client={queryClient}>
-            <ReactQueryDevtools />
             <RouterProvider router={router} />
         </QueryClientProvider>
     </StrictMode>
