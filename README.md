@@ -1,14 +1,23 @@
 # Тестовое задание Avito
 
 Пакетный менеджер [bun](https://bun.sh/docs/installation)
+
 Сборщик [vite](https://vite.dev/guide/)
+
 Роутинг [react-router](https://reactrouter.com/)
+
 Data-fetching [react-query](https://tanstack.com/query/latest/docs/framework/react/overview)
+
 Стейт-менеджер [zustand](https://zustand.docs.pmnd.rs/)
+
 Библиотека компонентов [shadcn](https://ui.shadcn.com/)
+
 CSS фреймворк [tailwind](https://tailwindcss.com/)
+
 Библиотека форм [react-hook-form](https://react-hook-form.com/)
+
 Валидация форм [zod](https://zod.dev/)
+
 Drag-n-drop библиотека [dnd-kit](https://dndkit.com/)
 
 # Список требований
@@ -56,8 +65,6 @@ Drag-n-drop библиотека [dnd-kit](https://dndkit.com/)
    `bun i`
 2. Запуск в режиме разработки
    `bun run dev`
-
-# Сборка Docker контейнера
 
 # Docker compose
 
