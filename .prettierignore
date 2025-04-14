@@ -7,3 +7,5 @@ bun.lock
 .gitignore
 node_modules
 *.svg
+Dockerfile
+Makefile
